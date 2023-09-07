@@ -14,7 +14,8 @@ async def handler(websocket, path):
         data = await websocket.recv()
         a = json.loads(data)
 
-        platform.go([a["x"], a["y"]], a["rot"])
+        if platform.isDone():
+            platform.go([a["x"], a["y"]], a["rot"])
 
         await websocket.send(json.dumps({"status": "good"}))
 
