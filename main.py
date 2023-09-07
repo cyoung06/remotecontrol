@@ -1,17 +1,21 @@
+import json
+import sys
 
 from arduino_serial import MovingPlatform
-
 
 import asyncio
 import websockets
 
+platform = MovingPlatform(sys.argv[1])
+
 
 async def handler(websocket, path):
     data = await websocket.recv()
+    a = json.loads(data)
 
-    reply = f"Data recieved as:  {data}!"
+    platform.go([a["x"], a["y"]], a["rot"])
 
-    await websocket.send(reply)
+    await websocket.send(json.dumps({"status": "good"}))
 
 
 start_server = websockets.serve(handler, "localhost", 8000)
