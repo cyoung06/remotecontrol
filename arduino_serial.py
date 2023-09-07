@@ -41,7 +41,7 @@ class MovingPlatform:
     def go(self, vec, rot):
         if not self.isDone():
             raise "Not done"
-        self.ready = False
+        # self.ready = False
         self.sendCommand(f"G {vec[0]} {vec[1]} {rot}\n")
 
     def isDone(self):
